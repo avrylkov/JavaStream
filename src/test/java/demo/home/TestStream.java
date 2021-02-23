@@ -81,7 +81,7 @@ public class TestStream {
     //================================================================
 
     private boolean isMatchString(Predicate<String> predicate, String text) {
-       return predicate.test(text);
+        return predicate.test(text);
     }
 
     @Test
@@ -90,6 +90,28 @@ public class TestStream {
         Assert.assertTrue(isMatchString(s -> s.contains("ы"), "Рыльков"));
         Assert.assertFalse(isMatchString(s -> s.endsWith("л"), "Рыльков"));
         Assert.assertTrue(isMatchString(s -> s.length() > 5, "Рыльков"));
+    }
+
+    //================================================================
+
+    private String not1() {
+        return "not 1";
+    }
+
+    @Test
+    public void testOptional() {
+        Person person = new Person("Вячеслав", "Рыльков", 15, Arrays.asList("Учеба", "Спорт"));
+
+        Person parent = new Person("Александр", "Рыльков", 50, Arrays.asList("Работа", "Спорт"));
+        person.setParent(parent);
+
+        String str = Optional.ofNullable(person)
+                .map(p -> p.getParent())
+                .map(p -> "Возраст родителя " + p.getAge())
+                .orElse("пусто");
+        System.out.println(str);
+
+
     }
 
 }

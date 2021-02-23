@@ -6,9 +6,12 @@ import java.util.List;
 
 public class Person {
 
-   private String firstName;
+
+
+    private String firstName;
    private String lastName;
    private Integer age;
+   private Person parent;
    private List<String> hobbys;
 
     public Person(String firstName, String lastName, Integer age, List<String> hobbys) {
@@ -33,4 +36,16 @@ public class Person {
     public List<String> getHobbys() {
         return hobbys;
     }
+
+    public Person getParent() {
+        return parent;
+    }
+
+    public void setParent(Person parent) {
+        this.parent = parent;
+    }
+
+
+
+
 }
