@@ -92,11 +92,24 @@ public class TestStream {
         Assert.assertTrue(isMatchString(s -> s.length() > 5, "Рыльков"));
     }
 
-    //================================================================
+    @Test
+    public void testFlatMap() {
+        Set<String> collect = personList.stream()
+                .flatMap(p -> p.getHobbys().stream())
+                .collect(Collectors.toSet());
+        Assert.assertTrue(collect.size() > 0);
 
-    private String not1() {
-        return "not 1";
+        List<Person> personHobbys = new ArrayList<>();
+        personList.forEach(p -> {
+            boolean match = p.getHobbys().stream().anyMatch(s -> s.equals("Работа"));
+            if (match) {
+                personHobbys.add(p);
+            }
+        });
+        Assert.assertTrue(personHobbys.size() > 0);
     }
+
+    //================================================================
 
     @Test
     public void testOptional() {
