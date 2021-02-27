@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -79,7 +81,6 @@ public class TestStream {
     }
 
     //================================================================
-
     private boolean isMatchString(Predicate<String> predicate, String text) {
         return predicate.test(text);
     }
@@ -90,6 +91,26 @@ public class TestStream {
         Assert.assertTrue(isMatchString(s -> s.contains("ы"), "Рыльков"));
         Assert.assertFalse(isMatchString(s -> s.endsWith("л"), "Рыльков"));
         Assert.assertTrue(isMatchString(s -> s.length() > 5, "Рыльков"));
+    }
+    //============================================================
+    @FunctionalInterface
+    public interface MyConverter<T, E> {
+        E convert(T param);
+    }
+
+    private <T, E> E conver(MyConverter<T, E> converter, T num) {
+        return converter.convert(num);
+    }
+
+    @Test
+    public void testConverter() {
+        String conver = conver(param -> String.format("%.2f", param), 245.9875f);
+        System.out.println(conver);
+        conver = conver(param -> String.format("%.2f", param), 252.1234f);
+        System.out.println(conver);
+        //
+        conver= conver(param -> DateTimeFormatter.ofPattern("MMMM dd yyyy").format(param), LocalDate.now());
+        System.out.println(conver);
     }
 
     @Test
